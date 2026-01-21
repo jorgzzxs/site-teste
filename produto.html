@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template PortfolioPro | TemplateShop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .product-detail {
+            padding: 60px 0;
+        }
+        
+        .product-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+        
+        .main-image {
+            background-color: var(--light-gray);
+            border-radius: var(--radius);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-color);
+            overflow: hidden;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .main-image i {
+            font-size: 5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .product-info {
+            padding: 1rem 0;
+        }
+        
+        .product-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            font-size: 1.1rem;
+            color: var(--gray-color);
+            margin-bottom: 2rem;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .product-features {
+            margin: 2rem 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .feature i {
+            color: var(--secondary-color);
+        }
+        
+        .btn-extra-large {
+            padding: 18px 36px;
+            font-size: 1.2rem;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .product-guarantee {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: var(--radius);
+            color: var(--secondary-color);
+        }
+        
+        .product-details {
+            margin-top: 4rem;
+        }
+        
+        .details-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--light-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            color: var(--gray-color);
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2rem 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab-content h4 {
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .includes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .include-item {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .include-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .purchase-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .purchase-modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            padding: 3rem;
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--light-gray);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            margin: 2rem auto;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 992px) {
+            .product-header {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .details-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                text-align: left;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Template<span>Shop</span></a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="produtos.html">Templates</a></li>
+                    <li><a href="index.html#contato">Contato</a></li>
+                </ul>
+                <a href="#comprar" class="btn btn-primary">Comprar Agora</a>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="product-detail container">
+        <div class="product-header">
+            <div class="product-images">
+                <div class="main-image" id="productMainImage">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Preview do Template</span>
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <div class="product-category" id="productCategory">Portfólio</div>
+                <h1 class="product-title" id="productTitle">PortfolioPro</h1>
+                <p class="product-description" id="productDescription">
+                    Template profissional e moderno para portfólios de desenvolvedores, designers e freelancers. Destaque seus projetos com um design limpo e responsivo.
+                </p>
+                
+                <div class="product-price">
+                    <span class="original-price" id="originalPrice">R$ 49,90</span>
+                    <span class="current-price" id="currentPrice">R$ 29,90</span>
+                    <span class="discount-badge" id="discountBadge">40% OFF</span>
+                </div>
+                
+                <div class="product-features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Totalmente responsivo</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Código limpo e comentado</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Fácil personalização</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Pronto para GitHub Pages</span>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn btn-primary btn-extra-large" id="buyButton">
+                    <i class="fas fa-shopping-cart"></i> Comprar agora - R$ 29,90
+                </a>
+                
+                <div class="product-guarantee">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Compra segura | Download imediato | Suporte por email</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="product-details">
+            <div class="details-tabs">
+                <button class="tab-btn active" data-tab="descricao">Descrição</button>
+                <button class="tab-btn" data-tab="inclui">O que está incluso</button>
+                <button class="tab-btn" data-tab="indicado">Para quem é indicado</button>
+            </div>
+            
+            <div class="tab-content active" id="descricao">
+                <h3>Sobre o Template PortfolioPro</h3>
+                <p>O PortfolioPro é um template moderno e profissional desenvolvido para desenvolvedores, designers e freelancers que desejam exibir seus trabalhos de forma elegante e eficiente.</p>
+                <p>Com design limpo e foco na experiência do usuário, este template permite que seus projetos sejam o centro das atenções. A navegação é intuitiva e a página é totalmente responsiva, garantindo uma ótima experiência em dispositivos móveis.</p>
+                
+                <h4>Características principais:</h4>
+                <ul>
+                    <li>Design moderno e minimalista</li>
+                    <li>Layout 100% responsivo (mobile-first)</li>
+                    <li>Seção de projetos com filtro por categoria</li>
+                    <li>Formulário de contato funcional</li>
+                    <li>Animações suaves em CSS</li>
+                    <li>Otimizado para performance</li>
+                    <li>Código bem organizado e comentado</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="inclui">
+                <h3>O que você recebe ao comprar</h3>
+                <div class="includes-grid">
+                    <div class="include-item">
+                        <div class="include-icon">
+                            <i class="fab fa-html5"></i>
+                        </div>
+                        <h4>Arquivos HTML</h4>
+                        <p>Todas as páginas HTML com estrutura semântica e bem comentada.</p>
+                    </div>
+                    
+                    <div class="include-item">
+                        <div class="include-icon">
+                            <i class="fab fa-css3-alt"></i>
+                        </div>
+                        <h4>Arquivos CSS</h4>
+                        <p>Estilos organizados em módulos, fácil de personalizar cores e fontes.</p>
+                    </div>
+                    
+                    <div class="include-item">
+                        <div class="include-icon">
+                            <i class="fab fa-js"></i>
+                        </div>
+                        <h4>JavaScript</h4>
+                        <p>Código JavaScript limpo para funcionalidades interativas do template.</p>
+                    </div>
+                    
+                    <div class="include-item">
+                        <div class="include-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h4>README com instruções</h4>
+                        <p>Documentação detalhada sobre como personalizar e publicar o template.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="indicado">
+                <h3>Para quem é este template?</h3>
+                <p>O PortfolioPro é ideal para:</p>
+                
+                <div class="includes-grid">
+                    <div class="include-item">
+                        <div class="include-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h4>Desenvolvedores Iniciantes</h4>
+                        <p>Que querem um portfólio profissional sem gastar semanas codificando do zero.</p>
+                    </div>
+                    
+                    <div class="include-item">
+                        <div class="include-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h4>Designers Freelancers</h4>
+                        <p>Que precisam mostrar seus trabalhos de forma visualmente atraente.</p>
+                    </div>
+                    
+                    <div class="include-item">
+                        <div class="include-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h4>Profissionais Criativos</h4>
+                        <p>Que desejam uma presença online profissional para atrair clientes.</p>
+                    </div>
+                    
+                    <div class="include-item">
+                        <div class="include-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h4>Estudantes</h4>
+                        <p>Que querem mostrar seus projetos acadêmicos e habilidades para empregadores.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal de compra -->
+        <div class="purchase-modal" id="purchaseModal">
+            <div class="modal-content">
+                <h3>Redirecionando para pagamento</h3>
+                <p>Você está sendo redirecionado para uma plataforma de pagamento segura...</p>
+                <div class="spinner"></div>
+                <p style="color: var(--gray-color); font-size: 0.9rem; margin-top: 2rem;">
+                    Nota: Esta é uma demonstração. Em um ambiente real, você seria redirecionado para Hotmart, Gumroad ou outra plataforma de pagamento.
+                </p>
+                <button class="btn btn-secondary" id="closeModal" style="margin-top: 2rem;">Cancelar</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">Template<span>Shop</span></a>
+                    <p>Templates de sites profissionais para desenvolvedores iniciantes, freelancers e criadores de conteúdo.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Links</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="produtos.html">Templates</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contato</h3>
+                    <p><i class="fas fa-envelope"></i> suporte@templateshop.com</p>
+                    <p><i class="fas fa-clock"></i> Resposta em até 24h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> TemplateShop. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="database.js"></script>
+</body>
+</html>

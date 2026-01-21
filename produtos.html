@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos os Templates | TemplateShop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Template<span>Shop</span></a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="produtos.html" class="active">Templates</a></li>
+                    <li><a href="index.html#contato">Contato</a></li>
+                </ul>
+                <a href="#all-products" class="btn btn-primary">Ver todos</a>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-hero" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 100px 0; text-align: center;">
+        <div class="container">
+            <h1 style="font-size: 3rem; color: white; margin-bottom: 1rem;">Nossos Templates</h1>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.9;">
+                Escolha o template perfeito para seu próximo projeto. Todos são 100% responsivos e fáceis de personalizar.
+            </p>
+        </div>
+    </section>
+
+    <section class="all-products" id="all-products" style="padding: 80px 0;">
+        <div class="container">
+            <div class="products-filter" style="background-color: white; padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Filtrar por categoria:</h3>
+                <div class="filter-buttons" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+                    <button class="filter-btn active" data-filter="all" style="padding: 8px 16px; background-color: var(--primary-color); color: white; border: none; border-radius: 20px; cursor: pointer; transition: var(--transition); font-weight: 500;">Todos</button>
+                    <button class="filter-btn" data-filter="portfolio" style="padding: 8px 16px; background-color: var(--light-color); border: none; border-radius: 20px; cursor: pointer; transition: var(--transition); font-weight: 500;">Portfólio</button>
+                    <button class="filter-btn" data-filter="landing" style="padding: 8px 16px; background-color: var(--light-color); border: none; border-radius: 20px; cursor: pointer; transition: var(--transition); font-weight: 500;">Landing Page</button>
+                    <button class="filter-btn" data-filter="blog" style="padding: 8px 16px; background-color: var(--light-color); border: none; border-radius: 20px; cursor: pointer; transition: var(--transition); font-weight: 500;">Blog</button>
+                    <button class="filter-btn" data-filter="negocio" style="padding: 8px 16px; background-color: var(--light-color); border: none; border-radius: 20px; cursor: pointer; transition: var(--transition); font-weight: 500;">Negócios</button>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Produtos carregados por JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" style="background-color: var(--light-color); padding: 80px 0;">
+        <div class="container">
+            <div class="cta-content" style="text-align: center;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Precisa de um template personalizado?</h2>
+                <p style="font-size: 1.1rem; color: var(--gray-color); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    Entre em contato para discutirmos um template exclusivo para suas necessidades.
+                </p>
+                <a href="mailto:suporte@templateshop.com" class="btn btn-primary btn-large">Fale conosco</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">Template<span>Shop</span></a>
+                    <p>Templates de sites profissionais para desenvolvedores iniciantes, freelancers e criadores de conteúdo.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Links</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="produtos.html">Templates</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contato</h3>
+                    <p><i class="fas fa-envelope"></i> suporte@templateshop.com</p>
+                    <p><i class="fas fa-clock"></i> Resposta em até 24h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> TemplateShop. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="database.js"></script>
+</body>
+</html>
