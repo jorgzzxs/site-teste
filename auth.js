@@ -1,6 +1,6 @@
 /**
  * Sistema de autenticação para o painel administrativo
- * Baseado em chave única e localStorage
+ * Versão corrigida para GitHub Pages
  */
 
 // Chave de armazenamento para sessão
@@ -11,19 +11,24 @@ const SESSION_KEY = 'adminSession';
  * @returns {boolean} True se autenticado, false caso contrário
  */
 function isAuthenticated() {
-    const sessionData = getSessionData();
-    
-    if (!sessionData || !sessionData.authenticated) {
+    try {
+        const sessionData = getSessionData();
+        
+        if (!sessionData || !sessionData.authenticated) {
+            return false;
+        }
+        
+        // Verificar se a sessão expirou (24 horas)
+        if (isSessionExpired(sessionData.timestamp)) {
+            logout();
+            return false;
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('Erro na autenticação:', error);
         return false;
     }
-    
-    // Verificar se a sessão expirou (24 horas)
-    if (isSessionExpired(sessionData.timestamp)) {
-        logout();
-        return false;
-    }
-    
-    return true;
 }
 
 /**
@@ -32,16 +37,21 @@ function isAuthenticated() {
  * @returns {boolean} True se autenticação bem-sucedida
  */
 function authenticate(accessKey) {
-    // Obter chave armazenada
-    const storedKey = localStorage.getItem('adminAccessKey') || 'admin123';
-    
-    if (accessKey === storedKey) {
-        // Criar sessão
-        createSession();
-        return true;
+    try {
+        // Obter chave armazenada (padrão: admin123)
+        const storedKey = localStorage.getItem('adminAccessKey') || 'admin123';
+        
+        if (accessKey === storedKey) {
+            // Criar sessão
+            createSession();
+            return true;
+        }
+        
+        return false;
+    } catch (error) {
+        console.error('Erro na autenticação:', error);
+        return false;
     }
-    
-    return false;
 }
 
 /**
@@ -50,7 +60,8 @@ function authenticate(accessKey) {
 function createSession() {
     const sessionData = {
         authenticated: true,
-        timestamp: new Date().getTime()
+        timestamp: new Date().getTime(),
+        userAgent: navigator.userAgent
     };
     
     localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
@@ -62,9 +73,10 @@ function createSession() {
  */
 function getSessionData() {
     try {
-        return JSON.parse(localStorage.getItem(SESSION_KEY));
+        const session = localStorage.getItem(SESSION_KEY);
+        return session ? JSON.parse(session) : null;
     } catch (error) {
-        console.error('Erro ao ler dados da sessão:', error);
+        console.error('Erro ao ler sessão:', error);
         return null;
     }
 }
@@ -84,6 +96,7 @@ function isSessionExpired(sessionTimestamp) {
 
 /**
  * Renova a sessão atual (estende a validade)
+ * @returns {boolean} True se renovada
  */
 function renewSession() {
     if (isAuthenticated()) {
@@ -102,11 +115,21 @@ function logout() {
 
 /**
  * Verifica autenticação e redireciona se necessário
- * @param {string} redirectUrl - URL para redirecionar se não autenticado
  */
-function requireAuth(redirectUrl = 'login.html') {
+function requireAuth() {
+    // Permitir acesso via URL com chave
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlKey = urlParams.get('key');
+    
+    if (urlKey) {
+        if (authenticate(urlKey)) {
+            return; // Acesso permitido via URL
+        }
+    }
+    
+    // Verificar sessão normal
     if (!isAuthenticated()) {
-        window.location.href = redirectUrl;
+        window.location.href = 'login.html';
     }
 }
 
@@ -116,11 +139,11 @@ function requireAuth(redirectUrl = 'login.html') {
  * @returns {boolean} True se alterada com sucesso
  */
 function changeAdminKey(newKey) {
-    if (!newKey || newKey.length < 4) {
+    if (!newKey || newKey.trim().length < 4) {
         return false;
     }
     
-    localStorage.setItem('adminAccessKey', newKey);
+    localStorage.setItem('adminAccessKey', newKey.trim());
     return true;
 }
 
@@ -137,10 +160,20 @@ function getSessionTimeRemaining() {
     
     const now = new Date().getTime();
     const sessionAge = now - sessionData.timestamp;
-    const maxAge = 24 * 60 * 60 * 1000; // 24 horas em milissegundos
+    const maxAge = 24 * 60 * 60 * 1000;
     const remaining = maxAge - sessionAge;
     
-    return Math.max(0, Math.floor(remaining / (60 * 1000))); // Converter para minutos
+    return Math.max(0, Math.floor(remaining / (60 * 1000)));
+}
+
+/**
+ * Configura a proteção da página admin
+ */
+function setupAdminProtection() {
+    // Verificar se estamos na página admin
+    if (window.location.pathname.includes('admin.html')) {
+        requireAuth();
+    }
 }
 
 // Verificar e renovar sessão periodicamente (a cada 5 minutos)
@@ -149,6 +182,13 @@ setInterval(() => {
         renewSession();
     }
 }, 5 * 60 * 1000);
+
+// Inicializar proteção quando a página carregar
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupAdminProtection);
+} else {
+    setupAdminProtection();
+}
 
 // Exportar funções para uso global
 window.auth = {
@@ -159,3 +199,6 @@ window.auth = {
     changeAdminKey,
     getSessionTimeRemaining
 };
+
+// Debug: Log no console
+console.log('Auth.js carregado - Sistema de autenticação ativo');
